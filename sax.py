@@ -4,8 +4,8 @@
 
 # Implementation adapted from https://jmotif.github.io/sax-vsm_site/morea/algorithm/SAX.html
 
-from scipy.stats import norm
 from string import ascii_letters as LETTERS
+from scipy.stats import norm
 
 
 def mean(data):
@@ -80,7 +80,7 @@ def sax(data, word_length, alphabet_size):
     args:
         data: The data to transform
         word_length: The length of the output string
-        alphabet_size: The length of the alphabet you want to use e.g. 4 => ABCD
+        alphabet_size: The length of the alphabet you want to use, for example, for an alphabet {a, b, c}, word_length = 3
     """
     return sax_transform(paa_transform(z_normalize(data), word_length), alphabet_size)
 
