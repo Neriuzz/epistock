@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 # Implementation of the SAX algorithm, which converts time-series data into a string representation
 # Author: Nerius Ilmonas
 # Date: 2021/02/28
@@ -83,15 +85,3 @@ def sax(data, word_length, alphabet_size):
         alphabet_size: The length of the alphabet you want to use, for example, for an alphabet {a, b, c}, word_length = 3
     """
     return sax_transform(paa_transform(z_normalize(data), word_length), alphabet_size)
-
-
-data = [2.02, 2.33, 2.99, 6.85, 9.20, 8.80, 7.50,
-        6.00, 5.85, 3.85, 4.85, 3.85, 2.22, 1.45, 1.34]
-data2 = [0.50, 1.29, 2.58, 3.83, 3.25, 4.25, 3.83,
-         5.63, 6.44, 6.25, 8.75, 8.83, 3.25, 0.75, 0.72]
-
-
-sax1 = sax(data, 9, 4)
-sax2 = sax(data2, 9, 4)
-print(sax1)
-print(sax2)
