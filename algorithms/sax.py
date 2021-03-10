@@ -70,7 +70,7 @@ def paa_to_string(paa, regions):
 
 
 def sax_transform(paa, alphabet_size):
-    """ Generate character regions using inverse cumulative density function then return string representation"""
+    """ Generate character regions using inverse cumulative density function then return string representation """
     regions = [norm.ppf((i * 1) / alphabet_size)
                for i in range(1, alphabet_size)]
     return paa_to_string(paa, regions)
