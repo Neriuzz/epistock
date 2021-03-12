@@ -30,25 +30,30 @@ def manepi(event_sequence, min_sup, event_types):
         event_sequence, event_types, min_sup)
 
     for event_type, occurrences in frequent_one_episodes.items():
+        # For simple 1-episodes, the support value is always just going to be the
+        # length of the set of their occurrences
         node = FrequentEpisodePrefixTreeNode(
-            event_type, occurrences, [i for i in range(len(occurrences))])
+            event_type, occurrences, len(occurrences))
         fept.children.append(node)
 
         grow(node, frequent_one_episodes, min_sup)
+
+    return fept
 
 
 def find_frequent_one_episodes(event_sequence, event_types, min_sup):
     """
     Finds all the frequent 1-episodes in the event sequence.
     """
+
     # Create a dictionary of event_types mapped to occurrences
     frequent_one_episodes = {event_type: [] for event_type in event_types}
 
-    # Fill in the occurrence array
+    # Fill occurrence array
     for event in event_sequence:
         frequent_one_episodes[event.type].append([event.time] * 2)
 
-    # Filter out all the episodes that don't have sup(epi) >= min_sup
+    # Filter out all the episodes that don't have support >= min_sup
     return dict(filter(lambda episode: len(episode[1]) >= min_sup, frequent_one_episodes.items()))
 
 
@@ -68,19 +73,14 @@ def grow(prefix_node, frequent_one_episodes, min_sup):
         if not minimal_occurrences:
             continue
 
-        # Get the minimal and non-overlapping occurrences of our new pattern
-        minimal_and_non_overlapping_occurrences = get_earliest_mano(
-            minimal_occurrences)
-
         # Check if the pattern is considered frequent (support >= min_sup)
-        if len(minimal_and_non_overlapping_occurrences) >= min_sup:
+        support = calculate_support(minimal_occurrences)
+        if support >= min_sup:
 
             # If it is, create a new FEPT node and add it as a child of the current node
             node = FrequentEpisodePrefixTreeNode(
-                node_label, minimal_occurrences, minimal_and_non_overlapping_occurrences)
+                node_label, minimal_occurrences, support)
             prefix_node.children.append(node)
-
-            print(node_label, minimal_occurrences)
 
             # Grow the new pattern further
             grow(node, frequent_one_episodes, min_sup)
@@ -112,24 +112,24 @@ def concat_minimal_occurrences(episode_a, label, occurrences):
     return label, b_minimal_occurrences
 
 
-def get_earliest_mano(occurrences):
+def calculate_support(occurrences):
     """
-    Computes the earliest minimal
-    and non-overlapping occurrences
-    from a minimal occurrence set.
+    Computes the cardinality of the largets
+    set of minimal and non-overlapping
+    occurrences.
     """
 
     i = 0
     j = 1
-    b_minimal_and_non_overlapping_occurrences = [i]
+    support = 1
     length = len(occurrences)
     while j < length - 1:
         for k in range(j, length):
             if occurrences[i][-1] < occurrences[k][0]:
-                b_minimal_and_non_overlapping_occurrences.append(k)
+                support += 1
                 i = k
                 j = i + 1
 
             j += 1
 
-    return b_minimal_and_non_overlapping_occurrences
+    return support

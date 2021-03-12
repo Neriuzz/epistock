@@ -34,14 +34,8 @@ class FrequentEpisodePrefixTreeNode:
     the minimal_occurrences are also non_overlapping
     """
 
-    def __init__(self, label, minimal_occurrences, minimal_and_non_overlapping_occurrences):
+    def __init__(self, label, minimal_occurrences, support):
         self.label = label
         self.minimal_occurrences = minimal_occurrences
-        self.minimal_and_non_overlapping_occurrences = minimal_and_non_overlapping_occurrences
+        self.support = support
         self.children = []
-
-    def support(self):
-        """
-        Return the support value of this episode
-        """
-        return len(self.minimal_and_non_overlapping_occurrences)
