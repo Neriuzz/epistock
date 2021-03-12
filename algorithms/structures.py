@@ -42,6 +42,32 @@ class FrequentEpisodePrefixTree:
         node.is_end = True
         return node
 
+    def get(self, label):
+        """
+        Fetch a node via a specific label
+        """
+        node = self.root
+        for letter in label:
+            if letter in node.children:
+                node = node.children[letter]
+            else:
+                return None
+        if node.is_end:
+            return node
+        return None
+
+    def exists(self, label):
+        """
+        Check if a node exists in the tree already
+        """
+        node = self.root
+        for letter in label:
+            if letter in node.children:
+                node = node.children[letter]
+            else:
+                return False
+        return True
+
     def dfs(self, node):
         """
         Perform a depth-first search starting from a given node
