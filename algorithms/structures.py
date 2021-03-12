@@ -30,6 +30,7 @@ class FrequentEpisodePrefixTree:
         """
         Insert a new node into the FEPT.
         """
+
         node = self.root
         for letter in label:
             if letter in node.children:
@@ -46,6 +47,7 @@ class FrequentEpisodePrefixTree:
         """
         Check if a node exists in the tree already
         """
+
         node = self.root
         for letter in label:
             if letter in node.children:
@@ -58,6 +60,7 @@ class FrequentEpisodePrefixTree:
         """
         Perform a depth-first search starting from a given node
         """
+
         if node.is_end:
             self.output.append(node)
 
@@ -69,6 +72,7 @@ class FrequentEpisodePrefixTree:
         Collects all the frequently occurring episodes
         and stores them in a array
         """
+
         node = self.root
         self.output = []
 
@@ -81,6 +85,7 @@ class FrequentEpisodePrefixTree:
         Outputs the frequently occurring episodes into
         a .txt file
         """
+
         frequent_episodes = self.get_all_frequent_episodes()
         with open("frequent_episodes.txt", "w") as f:
             print("Episode\t\t\tSupport", file=f)

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 """
-Implementation of the MANEPI algorithm as described in: https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=5694110
+Implementation of the MANEPI+ algorithm as described in: https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=5694110
 Author: Nerius Ilmonas
 Date: 09/03/2021
 """
@@ -62,6 +62,7 @@ def grow(fept, prefix_node, frequent_one_episodes, min_sup):
     all the frequent episodes with the given
     node as a prefix.
     """
+
     for event_type, occurrences in frequent_one_episodes.items():
 
         # Concatenate the two episodes

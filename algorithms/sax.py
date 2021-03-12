@@ -7,17 +7,19 @@
 # Implementation adapted from https://jmotif.github.io/sax-vsm_site/morea/algorithm/SAX.html
 
 import random
-from string import ascii_letters as LETTERS
+from string import ascii_uppercase as LETTERS
 from scipy.stats import norm
 
 
 def mean(data):
     """ Calculate the mean of the data """
+
     return sum(data)/len(data)
 
 
 def standard_deviation(data):
     """ Calculate the standard deviation of the data """
+
     m = mean(data)
     l = len(data)
     return (1 / l * sum([(i - m)**2 for i in data]))**.5
@@ -25,6 +27,7 @@ def standard_deviation(data):
 
 def z_normalize(data):
     """ Perform a z-normalization on the data """
+
     m = mean(data)
     sd = standard_deviation(data)
     return [(i - m)/sd for i in data]
@@ -58,6 +61,7 @@ def paa_transform(data, paa_size):
 
 def paa_to_string(paa, regions):
     """ Maps each value in the paa to a region and returns the character string representation """
+
     string = ""
     for i in paa:
         index = 0
@@ -72,6 +76,7 @@ def paa_to_string(paa, regions):
 
 def sax_transform(paa, alphabet_size):
     """ Generate character regions using inverse cumulative density function then return string representation """
+
     regions = [norm.ppf((i * 1) / alphabet_size)
                for i in range(1, alphabet_size)]
     return paa_to_string(paa, regions)
@@ -85,4 +90,5 @@ def sax(data, word_length, alphabet_size):
         word_length: The length of the output string
         alphabet_size: The length of the alphabet you want to use, for example, for an alphabet {a, b, c}, alphabet_size = 3
     """
+
     return sax_transform(paa_transform(z_normalize(data), word_length), alphabet_size)
