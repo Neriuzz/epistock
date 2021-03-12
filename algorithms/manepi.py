@@ -7,7 +7,6 @@ Date: 09/03/2021
 """
 
 # Import all required data structures
-import random
 from structures import Event, FrequentEpisodePrefixTree, FrequentEpisodePrefixTreeNode
 
 
