@@ -72,13 +72,15 @@ def grow(prefix_node, frequent_one_episodes, min_sup):
         minimal_and_non_overlapping_occurrences = get_earliest_mano(
             minimal_occurrences)
 
-        # Check if the pattern is considered frequent
+        # Check if the pattern is considered frequent (support >= min_sup)
         if len(minimal_and_non_overlapping_occurrences) >= min_sup:
 
             # If it is, create a new FEPT node and add it as a child of the current node
             node = FrequentEpisodePrefixTreeNode(
                 node_label, minimal_occurrences, minimal_and_non_overlapping_occurrences)
             prefix_node.children.append(node)
+
+            print(node_label, minimal_occurrences)
 
             # Grow the new pattern further
             grow(node, frequent_one_episodes, min_sup)
@@ -101,13 +103,7 @@ def concat_minimal_occurrences(episode_a, label, occurrences):
 
     for occurrence in occurrences:
         for j in range(i, a_minimal_occurrences_length):
-            if j < a_minimal_occurrences_length - 1 and a_minimal_occurrences[j][-1] < occurrence[0] and a_minimal_occurrences[j + 1][-1] >= occurrence[0]:
-                b_minimal_occurrences.append(
-                    [a_minimal_occurrences[j][0], occurrence[0]])
-                i = j
-                break
-
-            elif j >= a_minimal_occurrences_length - 1 and a_minimal_occurrences[j][-1] < occurrence[0]:
+            if a_minimal_occurrences[j][-1] < occurrence[0] and ((j < a_minimal_occurrences_length - 1 and a_minimal_occurrences[j + 1][-1] >= occurrence[0]) or j >= a_minimal_occurrences_length - 1):
                 b_minimal_occurrences.append(
                     [a_minimal_occurrences[j][0], occurrence[0]])
                 i = j

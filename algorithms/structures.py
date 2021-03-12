@@ -39,3 +39,9 @@ class FrequentEpisodePrefixTreeNode:
         self.minimal_occurrences = minimal_occurrences
         self.minimal_and_non_overlapping_occurrences = minimal_and_non_overlapping_occurrences
         self.children = []
+
+    def support(self):
+        """
+        Return the support value of this episode
+        """
+        return len(self.minimal_and_non_overlapping_occurrences)
