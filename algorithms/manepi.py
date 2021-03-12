@@ -68,8 +68,6 @@ def grow(prefix_node, frequent_one_episodes, min_sup):
         if not minimal_occurrences:
             continue
 
-        print(node_label)
-
         # Get the minimal and non-overlapping occurrences of our new pattern
         minimal_and_non_overlapping_occurrences = get_earliest_mano(
             minimal_occurrences)
