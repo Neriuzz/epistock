@@ -42,20 +42,6 @@ class FrequentEpisodePrefixTree:
         node.is_end = True
         return node
 
-    def get(self, label):
-        """
-        Fetch a node via a specific label
-        """
-        node = self.root
-        for letter in label:
-            if letter in node.children:
-                node = node.children[letter]
-            else:
-                return None
-        if node.is_end:
-            return node
-        return None
-
     def exists(self, label):
         """
         Check if a node exists in the tree already
@@ -99,7 +85,7 @@ class FrequentEpisodePrefixTree:
         with open("frequent_episodes.txt", "w") as f:
             print("Episode\t\t\tSupport", file=f)
             for episode in frequent_episodes:
-                print(f"{episode.label:<5}{episode.support:>12}", file=f)
+                print(f"{episode.label:<16}{episode.support}", file=f)
 
 
 class FrequentEpisodePrefixTreeNode:
