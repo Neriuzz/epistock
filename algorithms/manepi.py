@@ -10,7 +10,7 @@ Date: 09/03/2021
 from structures import Event, FrequentEpisodePrefixTree, FrequentEpisodePrefixTreeNode
 
 
-def manepi(event_sequence, min_sup, event_types):
+def manepi(event_types, event_sequence, min_sup):
     """
     Performs the MANEPI+ algorithm on a given
     event sequence with a defined support
@@ -18,6 +18,7 @@ def manepi(event_sequence, min_sup, event_types):
     frequent episode prefix tree.
 
     args:
+        event_types: The set of the type of events that are possible.
         event_sequence: The event sequence to perform the algorithm on.
         min_sup: The minimum support threshold.
     """
@@ -68,7 +69,7 @@ def grow(fept, prefix_node, frequent_one_episodes, min_sup):
         # Concatenate the two episodes
         label = prefix_node.label + event_type
 
-        # #MANEPI + Optimisations
+        #MANEPI + Optimisations
         continue_growth = True
 
         for i in range(1, len(label)):
