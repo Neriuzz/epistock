@@ -24,7 +24,56 @@ class FrequentEpisodePrefixTree:
     """
 
     def __init__(self):
-        self.children = []
+        self.root = FrequentEpisodePrefixTreeNode("", None, None)
+
+    def insert(self, label, minimal_occurrences, support):
+        """
+        Insert a new node into the FEPT.
+        """
+        node = self.root
+        for letter in label:
+            if letter in node.children:
+                node = node.children[letter]
+            else:
+                new_node = FrequentEpisodePrefixTreeNode(
+                    label, minimal_occurrences, support)
+                node.children[letter] = new_node
+                node = new_node
+        node.is_end = True
+        return node
+
+    def dfs(self, node):
+        """
+        Perform a depth-first search starting from a given node
+        """
+        if node.is_end:
+            self.output.append(node)
+
+        for child in node.children.values():
+            self.dfs(child)
+
+    def get_all_frequent_episodes(self):
+        """
+        Collects all the frequently occurring episodes
+        and store them in a array
+        """
+        node = self.root
+        self.output = []
+
+        self.dfs(node)
+
+        return self.output
+
+    def output_to_file(self):
+        """
+        Outputs the frequently occurring episodes into
+        a .txt file
+        """
+        frequent_episodes = self.get_all_frequent_episodes()
+        with open("frequent_episodes.txt", "w") as f:
+            print("Episode\t\t\tSupport", file=f)
+            for episode in frequent_episodes:
+                print(f"{episode.label:<5}\t{episode.support:>12}", file=f)
 
 
 class FrequentEpisodePrefixTreeNode:
@@ -38,4 +87,5 @@ class FrequentEpisodePrefixTreeNode:
         self.label = label
         self.minimal_occurrences = minimal_occurrences
         self.support = support
-        self.children = []
+        self.children = {}
+        self.is_end = False

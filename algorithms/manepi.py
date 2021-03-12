@@ -32,13 +32,12 @@ def manepi(event_sequence, min_sup, event_types):
     for event_type, occurrences in frequent_one_episodes.items():
         # For simple 1-episodes, the support value is always just going to be the
         # length of the set of their occurrences
-        node = FrequentEpisodePrefixTreeNode(
-            event_type, occurrences, len(occurrences))
-        fept.children.append(node)
+        node = fept.insert(event_type, occurrences, len(occurrences))
 
-        grow(node, frequent_one_episodes, min_sup)
+        grow(fept, node, frequent_one_episodes, min_sup)
 
-    return fept
+    fept.output_to_file()
+    return
 
 
 def find_frequent_one_episodes(event_sequence, event_types, min_sup):
@@ -57,7 +56,7 @@ def find_frequent_one_episodes(event_sequence, event_types, min_sup):
     return dict(filter(lambda episode: len(episode[1]) >= min_sup, frequent_one_episodes.items()))
 
 
-def grow(prefix_node, frequent_one_episodes, min_sup):
+def grow(fept, prefix_node, frequent_one_episodes, min_sup):
     """
     Expands a given node, adding onto the tree
     all the frequent episodes with the given
@@ -66,7 +65,7 @@ def grow(prefix_node, frequent_one_episodes, min_sup):
     for event_type, occurrences in frequent_one_episodes.items():
 
         # Grow our pattern and get the minimal occurrences of the new pattern
-        node_label, minimal_occurrences = concat_minimal_occurrences(
+        label, minimal_occurrences = concat_minimal_occurrences(
             prefix_node, event_type, occurrences)
 
         # If the pattern has no minimal occurrences, don't try to grow it
@@ -78,12 +77,10 @@ def grow(prefix_node, frequent_one_episodes, min_sup):
         if support >= min_sup:
 
             # If it is, create a new FEPT node and add it as a child of the current node
-            node = FrequentEpisodePrefixTreeNode(
-                node_label, minimal_occurrences, support)
-            prefix_node.children.append(node)
+            node = fept.insert(label, minimal_occurrences, support)
 
             # Grow the new pattern further
-            grow(node, frequent_one_episodes, min_sup)
+            grow(fept, node, frequent_one_episodes, min_sup)
 
     # All frequent patterns have now been found
     return

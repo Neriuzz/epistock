@@ -193,3 +193,6 @@ $RECYCLE.BIN/
 
 # End of https://www.toptal.com/developers/gitignore/api/vscode,python,windows,linux
 
+# Ignore all .txt files apart from requirements
+!requirements.txt
+*.txt
