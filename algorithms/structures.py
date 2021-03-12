@@ -15,6 +15,8 @@ class Event:
         self.type = symbol
         self.time = time
 
+# Implementation for this trie is adapted from: https://www.askpython.com/python/examples/trie-data-structure
+
 
 class FrequentEpisodePrefixTree:
     """
