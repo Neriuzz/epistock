@@ -55,7 +55,7 @@ class FrequentEpisodePrefixTree:
     def get_all_frequent_episodes(self):
         """
         Collects all the frequently occurring episodes
-        and store them in a array
+        and stores them in a array
         """
         node = self.root
         self.output = []
@@ -73,7 +73,7 @@ class FrequentEpisodePrefixTree:
         with open("frequent_episodes.txt", "w") as f:
             print("Episode\t\t\tSupport", file=f)
             for episode in frequent_episodes:
-                print(f"{episode.label:<5}\t{episode.support:>12}", file=f)
+                print(f"{episode.label:<5}{episode.support:>12}", file=f)
 
 
 class FrequentEpisodePrefixTreeNode:
