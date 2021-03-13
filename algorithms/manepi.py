@@ -10,7 +10,15 @@ Date: 09/03/2021
 from structures import Event, FrequentEpisodePrefixTree, FrequentEpisodePrefixTreeNode
 
 
-def manepi(event_types, event_sequence, min_sup):
+def get_event_types(event_sequence):
+    """
+    Extract all possible event types from the event_sequence
+    """
+
+    return sorted(set(event.type for event in event_sequence))
+
+
+def manepi(event_sequence, min_sup):
     """
     Performs the MANEPI+ algorithm on a given
     event sequence with a defined support
@@ -28,7 +36,7 @@ def manepi(event_types, event_sequence, min_sup):
 
     # Find all 1-episodes
     frequent_one_episodes = find_frequent_one_episodes(
-        event_sequence, event_types, min_sup)
+        event_sequence, min_sup)
 
     for event_type, occurrences in frequent_one_episodes.items():
         # For simple 1-episodes, the support value is always just going to be the
@@ -41,12 +49,13 @@ def manepi(event_types, event_sequence, min_sup):
     return
 
 
-def find_frequent_one_episodes(event_sequence, event_types, min_sup):
+def find_frequent_one_episodes(event_sequence, min_sup):
     """
     Finds all the frequent 1-episodes in the event sequence.
     """
 
     # Create a dictionary of event_types mapped to occurrences
+    event_types = get_event_types(event_sequence)
     frequent_one_episodes = {event_type: [] for event_type in event_types}
 
     # Fill occurrence array
@@ -86,8 +95,11 @@ def grow(fept, prefix_node, frequent_one_episodes, min_sup):
         minimal_occurrences = concat_minimal_occurrences(
             prefix_node, event_type, occurrences)
 
-        # If the pattern has no minimal occurrences, don't try to grow it
-        if not minimal_occurrences:
+        # If we have less minimal occurrences than the min_sup
+        # we will also have less minimal and non-overlapping
+        # occurrences than the min_sup, so we can skip
+        # this episode growth
+        if len(minimal_occurrences) < min_sup:
             continue
 
         # Check if the pattern is considered frequent (support >= min_sup)
@@ -128,9 +140,9 @@ def concat_minimal_occurrences(episode_a, label, occurrences):
 
 def calculate_support(occurrences):
     """
-    Computes the cardinality of the largets
-    set of minimal and non-overlapping
-    occurrences.
+    Computes the cardinality of the first
+    largest set of minimal and non-overlapping
+    occurrences => Support value of the episode
     """
 
     i = 0
