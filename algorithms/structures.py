@@ -27,6 +27,7 @@ class FrequentEpisodePrefixTree:
 
     def __init__(self):
         self.root = FrequentEpisodePrefixTreeNode("", None, None)
+        self.size = 0
 
     def insert(self, label, minimal_occurrences, support):
         """
@@ -43,6 +44,9 @@ class FrequentEpisodePrefixTree:
                 node.children[letter] = new_node
                 node = new_node
         node.is_end = True
+
+        self.size += 1
+
         return node
 
     def exists(self, label):

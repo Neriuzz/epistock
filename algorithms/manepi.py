@@ -8,6 +8,7 @@ Date: 09/03/2021
 
 # Import all required data structures
 from structures import Event, FrequentEpisodePrefixTree, FrequentEpisodePrefixTreeNode
+from time import time_ns
 
 
 def get_event_types(event_sequence):
@@ -35,6 +36,9 @@ def manepi(event_sequence, min_sup):
     # Create an empty FETP
     fept = FrequentEpisodePrefixTree()
 
+    # Start timing
+    t1 = time_ns()
+
     # Find all 1-episodes
     frequent_one_episodes = find_frequent_one_episodes(
         event_sequence, min_sup)
@@ -46,7 +50,15 @@ def manepi(event_sequence, min_sup):
 
         grow(fept, node, frequent_one_episodes, min_sup)
 
+    # End timing
+    t2 = time_ns()
+
+    # Output all frequently occurring episodes to a file print out some statistics
     fept.output_to_file()
+    print(
+        f"Found {fept.size} frequently occuring episodes in {(t2-t1) / int(1e6):.2f}ms from an event sequence of {len(event_sequence)} events.")
+
+    # All frequently occurring episodes have now been found
     return
 
 
