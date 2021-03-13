@@ -6,7 +6,6 @@
 
 # Implementation adapted from https://jmotif.github.io/sax-vsm_site/morea/algorithm/SAX.html
 
-import random
 from string import ascii_uppercase as LETTERS
 from scipy.stats import norm
 

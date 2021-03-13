@@ -8,3 +8,5 @@ Date: 03/09/2021
 
 from algorithms.sax import sax
 from algorithms.manepi import manepi
+
+
