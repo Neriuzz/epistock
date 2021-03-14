@@ -2,7 +2,7 @@
 class FrequentEpisodePrefixTree:
     """
     Represents a frequent episode prefix tree (FEPT) which stores all
-    frequent episodes within a given event sequencec in a space-efficient
+    frequent episodes within a given event sequence in a space-efficient
     manner. It is a lexicographical rooted directed tree.
     """
 
