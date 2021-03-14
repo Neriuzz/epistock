@@ -44,9 +44,7 @@ class FrequentEpisodePrefixTree:
                 node.children[letter] = new_node
                 node = new_node
 
-        node.is_end = True
         self.size += 1
-
         return node
 
     def exists(self, label):
@@ -67,7 +65,8 @@ class FrequentEpisodePrefixTree:
         Perform a depth-first search starting from a given node
         """
 
-        if node.is_end:
+        # Do not append root node to output
+        if node.label:
             self.output.append(node)
 
         for child in node.children.values():
@@ -102,8 +101,7 @@ class FrequentEpisodePrefixTree:
 class FrequentEpisodePrefixTreeNode:
     """
     Represents a node of the FEPT.
-    Stores the nodes label, minimal_occurences set and a set of indices for which
-    the minimal_occurrences are also non_overlapping
+    Stores the nodes label, minimal_occurences set and its support value
     """
 
     def __init__(self, label, minimal_occurrences, support):
@@ -111,4 +109,3 @@ class FrequentEpisodePrefixTreeNode:
         self.minimal_occurrences = minimal_occurrences
         self.support = support
         self.children = {}
-        self.is_end = False
