@@ -1,23 +1,5 @@
-"""
-This file holds all the data structures used in the algorithms.
-Author: Nerius Ilmonas
-Date: 11/03/2021
-"""
-
-
-class Event:
-    """
-    Represents a tuple (E, T) where E is the event type
-    and T is the time at which the event occured.
-    """
-
-    def __init__(self, symbol, time):
-        self.type = symbol
-        self.time = time
 
 # Implementation for this trie is adapted from: https://www.askpython.com/python/examples/trie-data-structure
-
-
 class FrequentEpisodePrefixTree:
     """
     Represents a frequent episode prefix tree (FEPT) which stores all
