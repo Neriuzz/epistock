@@ -43,8 +43,8 @@ class FrequentEpisodePrefixTree:
                     label, minimal_occurrences, support)
                 node.children[letter] = new_node
                 node = new_node
-        node.is_end = True
 
+        node.is_end = True
         self.size += 1
 
         return node
