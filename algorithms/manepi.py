@@ -155,7 +155,7 @@ def calculate_support(occurrences):
     j = 1
     support = 1
     length = len(occurrences)
-    while j < length - 1:
+    while j < length:
         for k in range(j, length):
             if occurrences[i][1] < occurrences[k][0]:
                 support += 1
