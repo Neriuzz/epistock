@@ -8,7 +8,8 @@ class FrequentEpisodePrefixTree:
 
     def __init__(self):
         self.root = FrequentEpisodePrefixTreeNode("", None, None)
-        self.size = 0
+        self.n_frequent_episodes = 0
+        self.n_frequent_episode_rules = 0
 
     def insert(self, label, minimal_occurrences, support):
         """
@@ -25,7 +26,7 @@ class FrequentEpisodePrefixTree:
                 node.children[letter] = new_node
                 node = new_node
 
-        self.size += 1
+        self.n_frequent_episodes += 1
         return node
 
     def exists(self, label):
@@ -54,6 +55,7 @@ class FrequentEpisodePrefixTree:
             if node.label:
                 self.episode_rules.append(
                     self.get_episode_rule(node, child))
+                self.n_frequent_episode_rules += 1
             self.dfs(child)
 
     def get_all_frequent_episodes_and_episode_rules(self):
