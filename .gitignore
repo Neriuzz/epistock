@@ -196,3 +196,6 @@ $RECYCLE.BIN/
 # Ignore all .txt files apart from requirements
 !requirements.txt
 *.txt
+
+# Ignore .csv files
+*.csv
