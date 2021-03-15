@@ -53,9 +53,11 @@ class FrequentEpisodePrefixTree:
 
         for child in node.children.values():
             if node.label:
-                self.episode_rules.append(
-                    self.get_episode_rule(node, child))
-                self.n_frequent_episode_rules += 1
+                episode_rule = self.get_episode_rule(node, child)
+                if episode_rule:
+                    self.episode_rules.append(episode_rule)
+                    self.n_frequent_episode_rules += 1
+
             self.dfs(child)
 
     def get_all_frequent_episodes_and_episode_rules(self):
@@ -106,8 +108,7 @@ class FrequentEpisodePrefixTree:
         # Output episode rules
         with open("episode_rules.txt", "w") as f:
             for rule in episode_rules:
-                if rule:
-                    print(rule, file=f)
+                print(rule, file=f)
 
 
 class FrequentEpisodePrefixTreeNode:
