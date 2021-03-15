@@ -49,7 +49,7 @@ def manepi(event_sequence, min_sup, min_conf):
     # Output all frequently occurring episodes and episode rules
     FEPT.output_to_file(min_conf)
     print(
-        f"Found {FEPT.n_frequent_episodes} frequently occuring episodes and {FEPT.n_frequent_episode_rules} frequent episode rules in {(t2 - t1) / 1e6:.2f}ms from an event sequence of {len(event_sequence)} events with min_sup = {min_sup} and min_conf = {min_conf}")
+        f"Found {FEPT.n_frequent_episodes} frequently occuring episodes and {FEPT.n_frequent_episode_rules} frequent episode rules in {(t2 - t1) / 1e9:.2f}s from an event sequence of {len(event_sequence)} events with min_sup = {min_sup} and min_conf = {min_conf}")
 
     # All frequently occurring episodes and frequent episode rules have now been found
     return

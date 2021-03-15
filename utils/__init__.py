@@ -4,4 +4,4 @@ Author: Nerius Ilmonas
 Date: 15/03/2021
 """
 
-from api import get_stock_data
+from utils.api import get_stock_data

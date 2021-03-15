@@ -3,7 +3,7 @@
 """
 This script pre-processes data and mines it using a specified algorithm and specified parameters
 Author: Nerius Ilmonas
-Date: 03/09/2021 
+Date: 09/03/2021 
 """
 
 from algorithms import manepi, sax
