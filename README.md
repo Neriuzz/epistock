@@ -1,2 +1,2 @@
-# Dissertation Algorithms
-This repository includes all the algorithms implemented for my dissertation.
+# Epistock
+Applying episode mining techniques to discretized stock data.
