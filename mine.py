@@ -6,6 +6,6 @@ Author: Nerius Ilmonas
 Date: 03/09/2021 
 """
 
-import algorithms
+from algorithms import manepi, sax
 from structures import Event
-from api import get_stock_data
+from utils import get_stock_data
