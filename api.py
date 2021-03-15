@@ -32,7 +32,7 @@ def get_stock_data(ticker, interval):
     # Initialise timer
     t1 = time.time()
 
-    print("Fetching ${ticker} data...")
+    print(f"Fetching ${ticker} data...")
 
     # Initialise .csv file
     with open("stock_data.csv", "w") as f:
