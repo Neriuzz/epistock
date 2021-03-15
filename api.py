@@ -58,6 +58,6 @@ def get_stock_data(ticker, interval):
     t2 = time.time()
 
     print(
-        f"Completed fetching ${ticker} data at {interval}m intervals ({t2 - t1}:.2f)s")
+        f"Completed fetching ${ticker} data at {interval}m intervals ({t2 - t1:.2f})s")
 
     return

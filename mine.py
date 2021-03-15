@@ -9,3 +9,5 @@ Date: 03/09/2021
 import algorithms
 from structures import Event
 from api import get_stock_data
+
+get_stock_data("AAPL", 5)
