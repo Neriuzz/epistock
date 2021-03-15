@@ -19,8 +19,9 @@ def manepi(event_sequence, min_sup, min_conf):
     Performs the MANEPI+ algorithm on a given
     event sequence with a user defined minimum
     support threshold and outputs all the
-    frequent episodes it finds to a 
-    frequent_episodes.txt file
+    frequent episodes and frequent episode rules
+    it finds to frequent_episodes.txt and
+    episode_rules.txt respectively. 
 
     args:
         event_types: The set of the type of events that are possible.
