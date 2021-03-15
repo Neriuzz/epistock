@@ -52,7 +52,8 @@ class FrequentEpisodePrefixTree:
 
         for child in node.children.values():
             if node.label:
-                self.episode_rules.append(self.get_episode_rule(node, child))
+                self.episode_rules.append(
+                    self.get_episode_rule(node, child))
             self.dfs(child)
 
     def get_all_frequent_episodes_and_episode_rules(self):
@@ -74,13 +75,22 @@ class FrequentEpisodePrefixTree:
         Generates an episode rule for a given node and its child
         """
 
-        return f"{node.label} -> {child.label} ({(child.support / node.support) * 100:.2f}% confidence)"
+        # Get the confidence of the rule
+        rule_conf = (child.support / node.support)
 
-    def output_to_file(self):
+        if rule_conf >= self.min_conf:
+            return f"{node.label} -> {child.label} (Support: {child.support}) (Confidence: {rule_conf * 100:.2f}%)"
+
+        # Else return nothing
+        return
+
+    def output_to_file(self, min_conf):
         """
         Outputs the frequently occurring episodes and episode
         rules to .txt files
         """
+
+        self.min_conf = min_conf
 
         # Get frequent episodes and episode rules
         frequent_episodes, episode_rules = self.get_all_frequent_episodes_and_episode_rules()
@@ -94,7 +104,8 @@ class FrequentEpisodePrefixTree:
         # Output episode rules
         with open("episode_rules.txt", "w") as f:
             for rule in episode_rules:
-                print(rule, file=f)
+                if rule:
+                    print(rule, file=f)
 
 
 class FrequentEpisodePrefixTreeNode:

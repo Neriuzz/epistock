@@ -14,7 +14,7 @@ from time import time_ns
 FEPT = FrequentEpisodePrefixTree()
 
 
-def manepi(event_sequence, min_sup):
+def manepi(event_sequence, min_sup, min_conf):
     """
     Performs the MANEPI+ algorithm on a given
     event sequence with a user defined minimum
@@ -45,8 +45,8 @@ def manepi(event_sequence, min_sup):
     # End timing
     t2 = time_ns()
 
-    # Output all frequently occurring episodes to a file print out some statistics
-    FEPT.output_to_file()
+    # Output all frequently occurring episodes and episode rules
+    FEPT.output_to_file(min_conf)
     print(
         f"Found {FEPT.size} frequently occuring episodes in {(t2 - t1) / 1e6:.2f}ms from an event sequence of {len(event_sequence)} events.")
 
