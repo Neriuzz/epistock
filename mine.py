@@ -8,25 +8,26 @@ Date: 09/03/2021
 
 import sys
 from algorithms import manepi
-from utils import get_stock_data, convert_stock_data
+from utils import get_stock_data, convert_stock_data, convert_sax_to_event_sequence
 
 
 def print_help():
     print(
         """
     Tool to discover frequently occurring episodes and frequent episode rules for a specific stock ticker.
-    
+
     *! Before using this tool please make sure you have set an environment variable ALPHA_VANTAGE_KEY to your alpha vantage API key. !*
 
     USAGE:
         python mine.py <TICKER> <INTERVAL> <OPTIONS>
+        python mine.py -h or python mine.py --help
 
     OPTIONS:
         -h or --help: Displays this message.
         -w or --word-length: Set the word length parameter for the SAX algorithm. (Default: 0.75 * Length of data)
-        -a or --alphabet-size: Set the alphabet size parameter for the SAX algorithm. (Default: 10)
-        -s or --min-sup: Set the minimum support value for MANEPI.
-        -c or --min-conf: Set the minimum confidence value for MANEPI.
+        -a or --alphabet-size: Set the alphabet size parameter for the SAX algorithm. (Default: 5)
+        -s or --min-sup: Set the minimum support value for MANEPI. (Default 0.4 * Length of event sequence)
+        -c or --min-conf: Set the minimum confidence value for MANEPI. (Default: 0.75)
 
     INFORMATION:
         Author: Nerius Ilmonas
@@ -34,12 +35,78 @@ def print_help():
         Version: 1.0
         Date: 16/03/2021
     """
-        # TODO: Add defaults
     )
     return
 
 
 if __name__ == "__main__":
+
+    # Defaults
+    alphabet_size = 5
+    min_conf = 0.75
+    min_sup_multiplier = 0.01
+    word_length_multiplier = 0.3
+
+    word_length = 0
+    min_sup = 0
+
+    ticker = ""
+    interval = 0
+
+    # Handle options
     if "-h" in sys.argv or "--help" in sys.argv:
         print_help()
         sys.exit(0)
+
+    if not len(sys.argv) >= 3:
+        raise Exception("Please provide a ticker and interval")
+
+    ticker = sys.argv[1]
+    interval = sys.argv[2]
+
+    args = sys.argv[3:]
+
+    if "-w" in args or "--word-length" in args:
+        try:
+            word_length = int(args[args.index("-w") + 1])
+        except:
+            word_length = int(args[args.index("--word-length") + 1])
+
+    if "-a" in args or "--alphabet-size" in args:
+        try:
+            alphabet_size = int(args[args.index("-a") + 1])
+        except:
+            alphabet_size = int(args[args.index("--alphabet-size") + 1])
+
+    if "-s" in args or "--min-sup" in args:
+        try:
+            min_sup = int(args[args.index("-s") + 1])
+        except:
+            min_sup = int(args[args.index("--min-sup") + 1])
+
+    if "-c" in args or "--min-conf" in args:
+        try:
+            min_conf = float(args[args.index("-c") + 1])
+        except:
+            min_conf = float(args[args.index("--min-conf") + 1])
+
+    # Download stock data
+    get_stock_data(ticker, interval)
+
+    # Parse stock data into event sequence
+    print("[!] Converting csv data into a sequence...")
+    sequence = convert_stock_data()
+
+    word_length = word_length if word_length else int(word_length_multiplier *
+                                                      len(sequence))
+
+    print("[!] Generating event sequence...")
+    event_sequence = convert_sax_to_event_sequence(
+        sequence, word_length, alphabet_size)
+
+    # Mine stock data for patterns
+    min_sup = min_sup if min_sup else int(
+        min_sup_multiplier * len(event_sequence))
+
+    print("[!] Discovering frequent episodes in event sequence...")
+    manepi(event_sequence, min_sup, min_conf)

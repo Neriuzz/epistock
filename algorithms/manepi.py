@@ -85,7 +85,7 @@ def grow(prefix_node, frequent_one_episodes, min_sup):
         # Concatenate the two episodes
         label = prefix_node.label + event_type
 
-        #MANEPI + Optimisations
+        #MANEPI+ Optimisations
         continue_growth = True
         for i in range(1, len(label)):
             suffix = label[i:]

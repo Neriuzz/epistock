@@ -101,9 +101,9 @@ class FrequentEpisodePrefixTree:
 
         # Output frequent epsidodes
         with open("frequent_episodes.txt", "w") as f:
-            print("Episode\t\t\tSupport", file=f)
+            print("Episode\t\t\t\t\tSupport", file=f)
             for episode in frequent_episodes:
-                print(f"{episode.label:<16}{episode.support}", file=f)
+                print(f"{episode.label:<25}{episode.support}", file=f)
 
         # Output episode rules
         with open("episode_rules.txt", "w") as f:

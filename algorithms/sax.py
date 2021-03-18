@@ -13,7 +13,7 @@ from scipy.stats import norm
 def mean(data):
     """ Calculate the mean of the data """
 
-    return sum(data)/len(data)
+    return sum(data) / len(data)
 
 
 def standard_deviation(data):
@@ -40,7 +40,7 @@ def paa_transform(data, paa_size):
     if paa_size >= length:
         return data
     if paa_size == 1:
-        return mean(data)
+        return [mean(data)]
     # If data can be divided into equal parts, perform piecewise constant aggregation
     if length % paa_size == 0:
         # Calculate the segment size
@@ -55,7 +55,7 @@ def paa_transform(data, paa_size):
         y = i // paa_size + 1
         paa[x - 1] += data[y - 1]
 
-    return [round(i / length, 2) for i in paa]
+    return [i / length for i in paa]
 
 
 def paa_to_string(paa, regions):
@@ -78,6 +78,7 @@ def sax_transform(paa, alphabet_size):
 
     regions = [norm.ppf((i * 1) / alphabet_size)
                for i in range(1, alphabet_size)]
+
     return paa_to_string(paa, regions)
 
 

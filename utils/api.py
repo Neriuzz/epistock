@@ -15,6 +15,11 @@ import time
 
 # Get API key from environment variables and create request URL
 API_KEY = os.getenv("ALPHA_VANTAGE_KEY")
+
+# Make sure user has set their API key
+if not API_KEY:
+    raise Exception("Alpha Vantage API key has not been set!")
+
 BASE_URL = "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY_EXTENDED&"
 
 
@@ -46,6 +51,11 @@ def get_stock_data(ticker, interval):
                 f"year{year}month{month + j - 1}", f"year{year}month{month + j}")
 
             data = "".join(requests.get(url).text.split("\n")[1:])
+
+            # Data fetched was not valid
+            if not data:
+                raise Exception("Invalid ticker or interval")
+
             with open("stock_data.csv", "a") as f:
                 f.write(data)
 
@@ -58,6 +68,6 @@ def get_stock_data(ticker, interval):
     t2 = time.time()
 
     print(
-        f"Completed fetching ${ticker} data at {interval}m intervals ({t2 - t1:.2f})s")
+        f"Completed fetching ${ticker} data at {interval}m intervals ({t2 - t1:.2f}s)")
 
     return

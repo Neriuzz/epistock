@@ -7,9 +7,13 @@ from algorithms import sax
 from structures import Event
 
 
-def convert_stock_data(word_length, alphabet_size):
+def convert_stock_data():
     with open("stock_data.csv", "r") as f:
         reader = csv.reader(f)
-        for line in reader:
-            pass
-        # TODO: Implement conversion to event sequence
+        _ = next(reader)
+        return [float(line[1]) for line in reader]
+
+
+def convert_sax_to_event_sequence(sequence, word_length, alphabet_size):
+    sax_form = sax(sequence, word_length, alphabet_size)
+    return [Event(sax_form[i], i + 1) for i in range(len(sax_form))]
