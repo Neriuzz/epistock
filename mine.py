@@ -8,7 +8,7 @@ Date: 09/03/2021
 
 import sys
 from algorithms import manepi
-from utils import get_stock_data, convert_stock_data, convert_sax_to_event_sequence
+from utils import get_stock_data, get_time_series, convert_to_event_sequence
 
 
 def print_help():
@@ -51,20 +51,18 @@ if __name__ == "__main__":
     min_sup = 0
 
     ticker = ""
-    interval = 0
 
     # Handle options
     if "-h" in sys.argv or "--help" in sys.argv:
         print_help()
         sys.exit(0)
 
-    if not len(sys.argv) >= 3:
-        raise Exception("Please provide a ticker and interval")
+    if not len(sys.argv) >= 2:
+        raise Exception("Please provide a ticker")
 
     ticker = sys.argv[1]
-    interval = sys.argv[2]
 
-    args = sys.argv[3:]
+    args = sys.argv[2:]
 
     if "-w" in args or "--word-length" in args:
         try:
@@ -91,18 +89,18 @@ if __name__ == "__main__":
             min_conf = float(args[args.index("--min-conf") + 1])
 
     # Download stock data
-    get_stock_data(ticker, interval)
+    get_stock_data(ticker)
 
     # Parse stock data into event sequence
     print("[!] Converting csv data into a sequence...")
-    sequence = convert_stock_data()
+    time_series = get_time_series()
 
     word_length = word_length if word_length else int(word_length_multiplier *
-                                                      len(sequence))
+                                                      len(time_series))
 
     print("[!] Generating event sequence...")
-    event_sequence = convert_sax_to_event_sequence(
-        sequence, word_length, alphabet_size)
+    event_sequence = convert_to_event_sequence(
+        time_series, word_length, alphabet_size)
 
     # Mine stock data for patterns
     min_sup = min_sup if min_sup else int(

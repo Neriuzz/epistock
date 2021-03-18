@@ -20,7 +20,7 @@ API_KEY = os.getenv("ALPHA_VANTAGE_KEY")
 if not API_KEY:
     raise Exception("Alpha Vantage API key has not been set!")
 
-BASE_URL = "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY_EXTENDED&"
+BASE_URL = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&"
 
 
 def get_stock_data(ticker, interval):
@@ -32,7 +32,7 @@ def get_stock_data(ticker, interval):
 
     year, month = 1, 1
     url = BASE_URL + \
-        f"symbol={ticker}&interval={interval}min&slice=year{year}month{month}&apikey={API_KEY}"
+        f"symbol={ticker}&outputsize=full&datatype=csv&apikey={API_KEY}"
 
     # Initialise timer
     t1 = time.time()
@@ -44,30 +44,9 @@ def get_stock_data(ticker, interval):
         # Write .csv headers
         print("time,open,high,low,close,volume", file=f)
 
-    # Loop through 2 years and 12 months worth of data
-    for i in range(2):
-        for j in range(12):
-            url = url.replace(
-                f"year{year}month{month + j - 1}", f"year{year}month{month + j}")
-
-            data = "".join(requests.get(url).text.split("\n")[1:])
-
-            # Data fetched was not valid
-            if not data:
-                raise Exception("Invalid ticker or interval")
-
-            with open("stock_data.csv", "a") as f:
-                f.write(data)
-
-            # Prevent getting rate limited (Can only make 5 requests per minute)
-            time.sleep(12.5)
-
-        year += 1
-        url = url.replace(f"year{year - 1}month{12}", f"year{year}month{1}")
-
+    
     t2 = time.time()
-
     print(
-        f"Completed fetching ${ticker} data at {interval}m intervals ({t2 - t1:.2f}s)")
+        f"Completed fetching ${ticker} data ({t2 - t1:.2f}s)")
 
     return
