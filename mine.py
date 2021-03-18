@@ -19,14 +19,14 @@ def print_help():
     *! Before using this tool please make sure you have set an environment variable ALPHA_VANTAGE_KEY to your alpha vantage API key. !*
 
     USAGE:
-        python mine.py <TICKER> <INTERVAL> <OPTIONS>
+        python mine.py <TICKER> <OPTIONS>
         python mine.py -h or python mine.py --help
 
     OPTIONS:
         -h or --help: Displays this message.
-        -w or --word-length: Set the word length parameter for the SAX algorithm. (Default: 0.75 * Length of data)
+        -w or --word-length: Set the word length parameter for the SAX algorithm. (Default: 0.5 * Length of data)
         -a or --alphabet-size: Set the alphabet size parameter for the SAX algorithm. (Default: 5)
-        -s or --min-sup: Set the minimum support value for MANEPI. (Default 0.4 * Length of event sequence)
+        -s or --min-sup: Set the minimum support value for MANEPI. (Default 0.01 * Length of event sequence)
         -c or --min-conf: Set the minimum confidence value for MANEPI. (Default: 0.75)
 
     INFORMATION:
@@ -45,7 +45,7 @@ if __name__ == "__main__":
     alphabet_size = 5
     min_conf = 0.75
     min_sup_multiplier = 0.01
-    word_length_multiplier = 0.3
+    word_length_multiplier = 0.5
 
     word_length = 0
     min_sup = 0
