@@ -11,7 +11,7 @@ Date: 15/03/2021
 
 import os
 import requests
-import time
+from time import time
 
 # Get API key from environment variables and create request URL
 API_KEY = os.getenv("ALPHA_VANTAGE_KEY")
@@ -23,19 +23,18 @@ if not API_KEY:
 BASE_URL = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&"
 
 
-def get_stock_data(ticker, interval):
+def get_stock_data(ticker):
     """
     Downloads 2 years and 12 months worth of stock
     price data based on a specific a stock ticker and 
     time interval e.g. AAPL 5mins
     """
 
-    year, month = 1, 1
     url = BASE_URL + \
         f"symbol={ticker}&outputsize=full&datatype=csv&apikey={API_KEY}"
 
     # Initialise timer
-    t1 = time.time()
+    t1 = time()
 
     print(f"Fetching ${ticker} data...")
 
@@ -43,9 +42,14 @@ def get_stock_data(ticker, interval):
     with open("stock_data.csv", "w") as f:
         # Write .csv headers
         print("time,open,high,low,close,volume", file=f)
+        data = "".join(requests.get(url).text.split("\n")[1:])
 
-    
-    t2 = time.time()
+        if not data:
+            raise Exception("Invalid ticker provided")
+
+        f.write(data)
+
+    t2 = time()
     print(
         f"Completed fetching ${ticker} data ({t2 - t1:.2f}s)")
 

@@ -42,9 +42,9 @@ def print_help():
 if __name__ == "__main__":
 
     # Defaults
-    alphabet_size = 5
+    alphabet_size = 26
     min_conf = 0.75
-    min_sup_multiplier = 0.01
+    min_sup_multiplier = 0.025
     word_length_multiplier = 0.5
 
     word_length = 0
