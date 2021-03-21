@@ -9,6 +9,7 @@ Date: 09/03/2021
 # Import all required data structures
 from time import time_ns
 from structures import Event, FrequentEpisodePrefixTree, FrequentEpisodePrefixTreeNode
+from copy import deepcopy
 
 # Create an empty FETP
 FEPT = FrequentEpisodePrefixTree()
@@ -42,7 +43,7 @@ def manepi(ticker, event_sequence, min_sup, min_conf):
     for event_type, occurrences in frequent_one_episodes:
         # For simple 1-episodes, the support value is always just going to be the
         # length of the set of their occurrences
-        node = FEPT.insert(event_type, occurrences, len(occurrences))
+        node = FEPT.insert([event_type], occurrences, len(occurrences))
 
         grow(node, frequent_one_episodes, min_sup)
 
@@ -86,7 +87,8 @@ def grow(prefix_node, frequent_one_episodes, min_sup):
     for event_type, occurrences in frequent_one_episodes:
 
         # Concatenate the two episodes
-        label = prefix_node.label + event_type
+        label = deepcopy(prefix_node.label)
+        label.append(event_type)
 
         #MANEPI+ Optimisations
         continue_growth = True

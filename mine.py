@@ -11,7 +11,6 @@ import os.path
 from algorithms import manepi
 from utils import get_stock_data, get_time_series, convert_to_event_sequence
 
-
 VALID_ARGS = ["-w", "--word-length", "-a", "--alphabet_size",
               "-s", "--min-sup", "-c", "--min-conf", "-h", "--help"]
 

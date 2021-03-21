@@ -87,7 +87,7 @@ class FrequentEpisodePrefixTree:
         rule_conf = (child.support / node.support)
 
         if rule_conf >= self.min_conf:
-            return f"{node.label} -> {child.label} (Support: {child.support}) (Confidence: {rule_conf * 100:.2f}%)"
+            return f"{format_label(node.label)} -> {format_label(child.label)} (Support: {child.support}) (Confidence: {rule_conf * 100:.2f}%)"
 
         # Else return nothing
         return
@@ -105,9 +105,9 @@ class FrequentEpisodePrefixTree:
 
         # Output frequent epsidodes
         with open(f"results/{self.ticker}/frequent_episodes.txt", "w") as f:
-            print("Episode\t\t\t\t\tSupport", file=f)
+            print("Episode" + "\t" * 10 + "Support", file=f)
             for episode in frequent_episodes:
-                print(f"{episode.label:<25}{episode.support}", file=f)
+                print(f"{format_label(episode.label):<50}{episode.support}", file=f)
 
         # Output episode rules
         with open(f"results/{self.ticker}/episode_rules.txt", "w") as f:
@@ -126,3 +126,7 @@ class FrequentEpisodePrefixTreeNode:
         self.minimal_occurrences = minimal_occurrences
         self.support = support
         self.children = {}
+
+
+def format_label(label):
+    return "<" + ",".join(label) + ">"
