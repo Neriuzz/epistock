@@ -14,9 +14,8 @@ from statistics import stdev, NormalDist
 def z_normalize(data):
     """ Perform a z-normalization on the data """
 
-    m = mean(data)
-    sd = stdev(data)
-    return [(i - m)/sd for i in data]
+    dist = NormalDist(mean(data), stdev(data))
+    return [dist.zscore(i) for i in data]
 
 
 def paa_transform(data, paa_size):
@@ -65,7 +64,6 @@ def sax_transform(paa, alphabet_size):
 
     regions = [NormalDist().inv_cdf((i * 1) / alphabet_size)
                for i in range(1, alphabet_size)]
-
     return paa_to_string(paa, regions)
 
 
