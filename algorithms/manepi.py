@@ -14,7 +14,7 @@ from structures import Event, FrequentEpisodePrefixTree, FrequentEpisodePrefixTr
 FEPT = FrequentEpisodePrefixTree()
 
 
-def manepi(event_sequence, min_sup, min_conf):
+def manepi(ticker, event_sequence, min_sup, min_conf):
     """
     Performs the MANEPI+ algorithm on a given
     event sequence with a user defined minimum
@@ -31,6 +31,9 @@ def manepi(event_sequence, min_sup, min_conf):
 
     # Start timing
     t1 = time_ns()
+
+    # Set the ticker so we can later output resutls to the correct directory
+    FEPT.set_ticker(ticker)
 
     # Find all 1-episodes
     frequent_one_episodes = find_frequent_one_episodes(

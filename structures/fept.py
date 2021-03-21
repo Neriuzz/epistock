@@ -10,6 +10,10 @@ class FrequentEpisodePrefixTree:
         self.root = FrequentEpisodePrefixTreeNode("", None, None)
         self.n_frequent_episodes = 0
         self.n_frequent_episode_rules = 0
+        self.ticker = ""
+
+    def set_ticker(self, ticker):
+        self.ticker = ticker
 
     def insert(self, label, minimal_occurrences, support):
         """
@@ -100,13 +104,13 @@ class FrequentEpisodePrefixTree:
         frequent_episodes, episode_rules = self.get_all_frequent_episodes_and_episode_rules()
 
         # Output frequent epsidodes
-        with open("frequent_episodes.txt", "w") as f:
+        with open(f"results/{self.ticker}/frequent_episodes.txt", "w") as f:
             print("Episode\t\t\t\t\tSupport", file=f)
             for episode in frequent_episodes:
                 print(f"{episode.label:<25}{episode.support}", file=f)
 
         # Output episode rules
-        with open("episode_rules.txt", "w") as f:
+        with open(f"results/{self.ticker}/episode_rules.txt", "w") as f:
             for rule in episode_rules:
                 print(rule, file=f)
 

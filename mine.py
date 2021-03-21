@@ -7,6 +7,7 @@ Date: 09/03/2021
 """
 
 import sys
+import os.path
 from algorithms import manepi
 from utils import get_stock_data, get_time_series, convert_to_event_sequence
 
@@ -48,8 +49,8 @@ if __name__ == "__main__":
     # Defaults
     alphabet_size = 26
     min_conf = 0.75
-    min_sup_multiplier = 0.025
-    word_length_multiplier = 0.5
+    min_sup_multiplier = 0.01
+    word_length_multiplier = 0.75
 
     word_length = 0
     min_sup = 0
@@ -92,12 +93,18 @@ if __name__ == "__main__":
         except:
             min_conf = float(args[args.index("--min-conf") + 1])
 
+    # Check if result directory exists, if it doesn't make one
+    if not os.path.isdir("results"):
+        os.mkdir("results")
+
     # Download stock data
-    get_stock_data(ticker)
+    if not get_stock_data(ticker):
+        print(
+            f"Data for ${ticker} has previously been fetched, skipping fetching...")
 
     # Parse stock data into event sequence
     print("[!] Converting csv data into a sequence...")
-    time_series = get_time_series()
+    time_series = get_time_series(ticker)
 
     word_length = word_length if word_length else int(word_length_multiplier *
                                                       len(time_series))
@@ -111,4 +118,4 @@ if __name__ == "__main__":
         min_sup_multiplier * len(event_sequence))
 
     print("[!] Discovering frequent episodes in event sequence...")
-    manepi(event_sequence, min_sup, min_conf)
+    manepi(ticker, event_sequence, min_sup, min_conf)

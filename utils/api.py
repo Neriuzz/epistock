@@ -30,6 +30,12 @@ def get_stock_data(ticker):
     time interval e.g. AAPL 5mins
     """
 
+    # Create folders for data if they don't exist
+    if os.path.isdir(f"results/{ticker}"):
+        return 0
+    else:
+        os.mkdir(f"results/{ticker}")
+
     url = BASE_URL + \
         f"symbol={ticker}&outputsize=full&datatype=csv&apikey={API_KEY}"
 
@@ -39,7 +45,7 @@ def get_stock_data(ticker):
     print(f"Fetching ${ticker} data...")
 
     # Initialise .csv file
-    with open("stock_data.csv", "w") as f:
+    with open(f"results/{ticker}/{ticker}.csv", "w") as f:
         # Write .csv headers
         print("time,open,high,low,close,volume", file=f)
         data = "".join(requests.get(url).text.split("\n")[1:])
@@ -53,4 +59,4 @@ def get_stock_data(ticker):
     print(
         f"Completed fetching ${ticker} data ({t2 - t1:.2f}s)")
 
-    return
+    return 1
