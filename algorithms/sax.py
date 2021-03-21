@@ -7,28 +7,16 @@
 # Implementation adapted from https://jmotif.github.io/sax-vsm_site/morea/algorithm/SAX.html
 
 from string import ascii_uppercase as LETTERS
-from scipy.stats import norm
-
-
-def mean(data):
-    """ Calculate the mean of the data """
-
-    return sum(data) / len(data)
-
-
-def standard_deviation(data):
-    """ Calculate the standard deviation of the data """
-
-    m = mean(data)
-    l = len(data)
-    return (1 / l * sum([(i - m)**2 for i in data]))**.5
+from statistics import fmean as mean
+from statistics import stdev
+from statistics import NormalDist
 
 
 def z_normalize(data):
     """ Perform a z-normalization on the data """
 
     m = mean(data)
-    sd = standard_deviation(data)
+    sd = stdev(data)
     return [(i - m)/sd for i in data]
 
 
@@ -76,7 +64,9 @@ def paa_to_string(paa, regions):
 def sax_transform(paa, alphabet_size):
     """ Generate character regions using inverse cumulative density function then return string representation """
 
-    regions = [norm.ppf((i * 1) / alphabet_size)
+    normal_dist = NormalDist()
+
+    regions = [normal_dist.inv_cdf((i * 1) / alphabet_size)
                for i in range(1, alphabet_size)]
 
     return paa_to_string(paa, regions)
