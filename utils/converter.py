@@ -17,7 +17,10 @@ def get_time_series(ticker):
 
     with open(f"results/{ticker}/{ticker}.csv", "r") as f:
         reader = csv.reader(f)
+
+        # Skip the column headers
         _ = next(reader)
+
         return [(float(line[2]) + float(line[3]) + float(line[4])) / 3 for line in reader][::-1]
 
 

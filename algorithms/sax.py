@@ -78,7 +78,7 @@ def sax(data, word_length, alphabet_size):
     args:
         data: The data to transform
         word_length: The length of the output string
-        alphabet_size: The length of the alphabet you want to use, for example, for an alphabet {a, b, c}, alphabet_size = 3
+        alphabet_size: The length of the alphabet you want to use, for example, for an alphabet {A, B, C}, alphabet_size = 3
     """
 
     # Set alphabet depending on alphabet size
