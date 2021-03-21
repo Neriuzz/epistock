@@ -1,5 +1,3 @@
-#!usr/bin/env python3
-
 """
 Uses the alpha vantage API to retrieve a large amount of historical
 stock price data for a speific marker and saves it to stock_data.csv
