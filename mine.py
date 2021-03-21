@@ -11,6 +11,10 @@ from algorithms import manepi
 from utils import get_stock_data, get_time_series, convert_to_event_sequence
 
 
+VALID_ARGS = ["-w", "--word-length", "-a", "--alphabet_size",
+              "-s", "--min-sup", "-c", "--min-conf", "-h", "--help"]
+
+
 def print_help():
     print(
         """
@@ -57,7 +61,7 @@ if __name__ == "__main__":
         print_help()
         sys.exit(0)
 
-    if not len(sys.argv) >= 2:
+    if sys.argv[1] in VALID_ARGS:
         raise Exception("Please provide a ticker")
 
     ticker = sys.argv[1]
@@ -89,7 +93,7 @@ if __name__ == "__main__":
             min_conf = float(args[args.index("--min-conf") + 1])
 
     # Download stock data
-    # get_stock_data(ticker)
+    get_stock_data(ticker)
 
     # Parse stock data into event sequence
     print("[!] Converting csv data into a sequence...")
