@@ -33,7 +33,7 @@ def manepi(ticker, event_sequence, min_sup, min_conf):
     # Start timing
     t1 = time_ns()
 
-    # Set the ticker so we can later output resutls to the correct directory
+    # Set the ticker so we can later output results to the correct directory
     FEPT.set_ticker(ticker)
 
     # Find all 1-episodes
