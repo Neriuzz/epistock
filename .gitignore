@@ -159,6 +159,7 @@ dmypy.json
 
 ### vscode ###
 .vscode/*
+.vscode
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
@@ -199,3 +200,6 @@ $RECYCLE.BIN/
 
 # Ignore .csv files
 *.csv
+
+# Ignore results directory
+results
