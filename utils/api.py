@@ -48,15 +48,17 @@ def get_stock_data(ticker):
     with open(f"results/{ticker}/{ticker}.csv", "w") as f:
         # Write .csv headers
         print("time,open,high,low,close,volume", file=f)
+
+        # Get data and create a string from it, omitting headers
         data = "".join(requests.get(url).text.split("\n")[1:])
 
         if not data:
             raise Exception("Invalid ticker provided")
 
+        # Write the data to a csv file
         f.write(data)
 
     t2 = time()
-    print(
-        f"Completed fetching ${ticker} data ({t2 - t1:.2f}s)")
+    print(f"Completed fetching ${ticker} data ({t2 - t1:.2f}s)")
 
     return 1

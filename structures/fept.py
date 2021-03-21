@@ -7,13 +7,26 @@ class FrequentEpisodePrefixTree:
     """
 
     def __init__(self):
+        """
+        Constructor, sets all the initial required values for the FEPT
+        """
         self.root = FrequentEpisodePrefixTreeNode("", None, None)
         self.n_frequent_episodes = 0
         self.n_frequent_episode_rules = 0
-        self.ticker = ""
 
     def set_ticker(self, ticker):
+        """
+        Setter for the ticker attribute
+        """
+
         self.ticker = ticker
+
+    def set_min_conf(self, min_conf):
+        """
+        Setter for the min_conf attribute
+        """
+
+        self.min_conf = min_conf
 
     def insert(self, label, minimal_occurrences, support):
         """
@@ -87,18 +100,16 @@ class FrequentEpisodePrefixTree:
         rule_conf = (child.support / node.support)
 
         if rule_conf >= self.min_conf:
-            return f"{format_label(node.label)} -> {format_label(child.label)} (Support: {child.support}) (Confidence: {rule_conf * 100:.2f}%)"
+            return f"{node.fmt_label} -> {child.fmt_label} (Support: {child.support}) (Confidence: {rule_conf * 100:.2f}%)"
 
         # Else return nothing
         return
 
-    def output_to_file(self, min_conf):
+    def output_to_file(self):
         """
         Outputs the frequently occurring episodes and episode
         rules to .txt files
         """
-
-        self.min_conf = min_conf
 
         # Get frequent episodes and episode rules
         frequent_episodes, episode_rules = self.get_all_frequent_episodes_and_episode_rules()
@@ -107,7 +118,7 @@ class FrequentEpisodePrefixTree:
         with open(f"results/{self.ticker}/frequent_episodes.txt", "w") as f:
             print("Episode" + "\t" * 10 + "Support", file=f)
             for episode in frequent_episodes:
-                print(f"{format_label(episode.label):<50}{episode.support}", file=f)
+                print(f"{episode.fmt_label:<50}{episode.support}", file=f)
 
         # Output episode rules
         with open(f"results/{self.ticker}/episode_rules.txt", "w") as f:
@@ -127,10 +138,10 @@ class FrequentEpisodePrefixTreeNode:
         self.support = support
         self.children = {}
 
+    @property
+    def fmt_label(self):
+        """
+        Return a formatted version of the label ["A", "A"] => A A
+        """
 
-def format_label(label):
-    """
-    Helper function to correctly format labels when outputting the FEPT
-    """
-
-    return "<" + ",".join(label) + ">"
+        return " ".join(self.label)

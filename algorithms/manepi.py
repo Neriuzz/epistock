@@ -7,8 +7,9 @@ Date: 09/03/2021
 """
 
 # Import all required data structures
-from time import time_ns
 from structures import Event, FrequentEpisodePrefixTree, FrequentEpisodePrefixTreeNode
+
+from time import time_ns
 from copy import deepcopy
 
 # Create an empty FETP
@@ -35,6 +36,8 @@ def manepi(ticker, event_sequence, min_sup, min_conf):
 
     # Set the ticker so we can later output results to the correct directory
     FEPT.set_ticker(ticker)
+    # Set minimum confidence required for episode rules
+    FEPT.set_min_conf(min_conf)
 
     # Find all 1-episodes
     frequent_one_episodes = find_frequent_one_episodes(
@@ -51,7 +54,7 @@ def manepi(ticker, event_sequence, min_sup, min_conf):
     t2 = time_ns()
 
     # Output all frequently occurring episodes and episode rules
-    FEPT.output_to_file(min_conf)
+    FEPT.output_to_file()
     print(
         f"Found {FEPT.n_frequent_episodes} frequently occuring episodes and {FEPT.n_frequent_episode_rules} frequent episode rules in {(t2 - t1) / 1e9:.2f}s from an event sequence of {len(event_sequence)} events with min_sup = {min_sup} and min_conf = {min_conf}")
 

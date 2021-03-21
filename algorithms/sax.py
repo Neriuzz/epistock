@@ -10,9 +10,6 @@ from string import ascii_uppercase, ascii_lowercase
 from statistics import fmean as mean
 from statistics import stdev, NormalDist
 
-# Initialise empty alphabet
-ALPHABET = []
-
 
 def z_normalize(data):
     """ Perform a z-normalization on the data """
@@ -47,7 +44,7 @@ def paa_transform(data, paa_size):
     return [i / length for i in paa]
 
 
-def paa_to_string(paa, regions):
+def paa_to_string(paa, regions, alphabet):
     """ Maps each value in the paa to a region and returns the character string representation """
 
     string = []
@@ -59,7 +56,7 @@ def paa_to_string(paa, regions):
         except:
             pass
 
-        string.append(str(ALPHABET[index]))
+        string.append(alphabet[index])
 
     return string
 
@@ -69,7 +66,7 @@ def sax_transform(paa, alphabet_size):
 
     regions = [NormalDist().inv_cdf((i * 1) / alphabet_size)
                for i in range(1, alphabet_size)]
-    return paa_to_string(paa, regions)
+    return paa_to_string(paa, regions, get_alphabet(alphabet_size))
 
 
 def sax(data, word_length, alphabet_size):
@@ -81,13 +78,20 @@ def sax(data, word_length, alphabet_size):
         alphabet_size: The length of the alphabet you want to use, for example, for an alphabet {A, B, C}, alphabet_size = 3
     """
 
-    # Set alphabet depending on alphabet size
-    global ALPHABET
-    if alphabet_size > 52:
-        ALPHABET = [i for i in range(alphabet_size)]
-    elif alphabet_size > 26:
-        ALPHABET = ascii_uppercase + ascii_lowercase
-    else:
-        ALPHABET = ascii_uppercase
-
     return sax_transform(paa_transform(z_normalize(data), word_length), alphabet_size)
+
+
+def get_alphabet(alphabet_size):
+    """
+    Retrieve the alphabet based on the alphabet_size
+    """
+
+    alphabet = []
+    if alphabet_size > 52:
+        alphabet = [str(i) for i in range(alphabet_size)]
+    elif alphabet_size > 26:
+        alphabet = ascii_uppercase + ascii_lowercase
+    else:
+        alphabet = ascii_uppercase
+
+    return alphabet
