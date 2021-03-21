@@ -1,4 +1,14 @@
+"""
+A frequent episode prefix tree data structured used for storing frequently occuring episodes
+in a space efficient manner.
+
+Author: Nerius Ilmonas
+Date: 13/03/2021
+"""
+
 # Implementation for this trie is adapted from: https://www.askpython.com/python/examples/trie-data-structure
+
+
 class FrequentEpisodePrefixTree:
     """
     Represents a frequent episode prefix tree (FEPT) which stores all
