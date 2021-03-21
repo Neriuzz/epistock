@@ -6,9 +6,12 @@
 
 # Implementation adapted from https://jmotif.github.io/sax-vsm_site/morea/algorithm/SAX.html
 
-from string import ascii_uppercase as LETTERS
+from string import ascii_uppercase, ascii_lowercase
 from statistics import fmean as mean
 from statistics import stdev, NormalDist
+
+# Initialise empty alphabet
+ALPHABET = []
 
 
 def z_normalize(data):
@@ -47,7 +50,7 @@ def paa_transform(data, paa_size):
 def paa_to_string(paa, regions):
     """ Maps each value in the paa to a region and returns the character string representation """
 
-    string = ""
+    string = []
     for i in paa:
         index = 0
         try:
@@ -55,7 +58,9 @@ def paa_to_string(paa, regions):
                 index += 1
         except:
             pass
-        string += LETTERS[index]
+
+        string.append(str(ALPHABET[index]))
+
     return string
 
 
@@ -75,5 +80,14 @@ def sax(data, word_length, alphabet_size):
         word_length: The length of the output string
         alphabet_size: The length of the alphabet you want to use, for example, for an alphabet {a, b, c}, alphabet_size = 3
     """
+
+    # Set alphabet depending on alphabet size
+    global ALPHABET
+    if alphabet_size > 52:
+        ALPHABET = [i for i in range(alphabet_size)]
+    elif alphabet_size > 26:
+        ALPHABET = ascii_uppercase + ascii_lowercase
+    else:
+        ALPHABET = ascii_uppercase
 
     return sax_transform(paa_transform(z_normalize(data), word_length), alphabet_size)

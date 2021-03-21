@@ -62,7 +62,7 @@ if __name__ == "__main__":
 
     ticker = sys.argv[1]
 
-    args = sys.argv[2:]
+    args = sys.argv[1:]
 
     if "-w" in args or "--word-length" in args:
         try:
