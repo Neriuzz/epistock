@@ -12,13 +12,13 @@ from structures import Event
 def get_time_series():
     """
     Extract the time series sequence from our csv file
-    by taking the average price for each day (high + low) / 2
+    by taking the average price for each day (high + low + close) / 3
     """
 
     with open("stock_data.csv", "r") as f:
         reader = csv.reader(f)
         _ = next(reader)
-        return [(float(line[2]) + float(line[3])) / 2 for line in reader][::-1]
+        return [(float(line[2]) + float(line[3]) + float(line[4])) / 3 for line in reader][::-1]
 
 
 def convert_to_event_sequence(sequence, word_length, alphabet_size):

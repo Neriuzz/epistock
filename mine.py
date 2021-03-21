@@ -89,7 +89,7 @@ if __name__ == "__main__":
             min_conf = float(args[args.index("--min-conf") + 1])
 
     # Download stock data
-    get_stock_data(ticker)
+    # get_stock_data(ticker)
 
     # Parse stock data into event sequence
     print("[!] Converting csv data into a sequence...")

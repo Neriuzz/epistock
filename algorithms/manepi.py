@@ -7,8 +7,8 @@ Date: 09/03/2021
 """
 
 # Import all required data structures
-from structures import Event, FrequentEpisodePrefixTree, FrequentEpisodePrefixTreeNode
 from time import time_ns
+from structures import Event, FrequentEpisodePrefixTree, FrequentEpisodePrefixTreeNode
 
 # Create an empty FETP
 FEPT = FrequentEpisodePrefixTree()
