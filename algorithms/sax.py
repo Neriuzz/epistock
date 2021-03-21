@@ -8,8 +8,7 @@
 
 from string import ascii_uppercase as LETTERS
 from statistics import fmean as mean
-from statistics import stdev
-from statistics import NormalDist
+from statistics import stdev, NormalDist
 
 
 def z_normalize(data):
@@ -64,9 +63,7 @@ def paa_to_string(paa, regions):
 def sax_transform(paa, alphabet_size):
     """ Generate character regions using inverse cumulative density function then return string representation """
 
-    normal_dist = NormalDist()
-
-    regions = [normal_dist.inv_cdf((i * 1) / alphabet_size)
+    regions = [NormalDist().inv_cdf((i * 1) / alphabet_size)
                for i in range(1, alphabet_size)]
 
     return paa_to_string(paa, regions)
