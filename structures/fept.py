@@ -129,4 +129,8 @@ class FrequentEpisodePrefixTreeNode:
 
 
 def format_label(label):
+    """
+    Helper function to correctly format labels when outputting the FEPT
+    """
+
     return "<" + ",".join(label) + ">"
