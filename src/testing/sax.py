@@ -10,10 +10,10 @@ def data_size_test():
     sizes = []
 
     word_length = 500
-    alphabet_size = 20
+    alphabet_size = 5
     for i in range(10):
         # Setup required variables
-        data_length = 2**(i + 1) * 500
+        data_length = 2**(i + 1) * 1000
         data = [random.random() for _ in range(data_length)]
 
         # Start timing
@@ -40,7 +40,7 @@ def word_length_test():
     # Create random data set
     data = [random.random() for _ in range(10000)]
 
-    alphabet_size = 20
+    alphabet_size = 5
     for i in range(10):
         # Setup required variables
         word_length = 2**(i + 1)
@@ -72,7 +72,7 @@ def alphabet_size_test():
     word_length = 500
     for i in range(10):
         # Setup required variables
-        alphabet_size = 2**(i + 1) * 20
+        alphabet_size = 2**(i + 1) * 5
 
         # Start timing
         t1 = time.time_ns()
