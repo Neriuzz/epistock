@@ -1,3 +1,10 @@
+"""
+Testing for the SAX algorithm.
+
+Author: Nerius Ilmonas
+Date: 24/03/2021
+"""
+
 from algorithms import sax
 import random
 import time
