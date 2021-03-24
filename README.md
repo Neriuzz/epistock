@@ -3,9 +3,10 @@ Applying episode mining techniques to discretized stock data.
 
 ### Requirements
 Before running the script, please ensure that:
-    - You have installed python 3.9.2
-    - You have installed all required packages via `pip install -r requirements.txt`
-    - You have set an environment variable `ALPHA_VANTAGE_KEY` to your Alpha Vantage API key
+
+- You have installed python 3.9.2
+- You have installed all required packages via `pip install -r requirements.txt`
+- You have set an environment variable `ALPHA_VANTAGE_KEY` to your Alpha Vantage API key
 
 ### Usage
 For help please use
