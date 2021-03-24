@@ -77,7 +77,6 @@ def sax(data, word_length, alphabet_size):
         word_length: The length of the output string
         alphabet_size: The length of the alphabet you want to use, for example, for an alphabet {A, B, C}, alphabet_size = 3
     """
-
     return sax_transform(paa_transform(z_normalize(data), word_length), alphabet_size)
 
 
