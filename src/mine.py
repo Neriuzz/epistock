@@ -23,8 +23,11 @@ def print_help():
     *! Before using this tool please make sure you have set an environment variable ALPHA_VANTAGE_KEY to your alpha vantage API key. !*
 
     USAGE:
-        python mine.py <TICKER> <OPTIONS>
-        python mine.py -h or python mine.py --help
+        python src/mine.py <TICKER> <OPTIONS>
+        python src/mine.py -h or python mine.py --help
+    
+    TESTING:
+        python src/test.py
 
     OPTIONS:
         -h or --help: Displays this message.
