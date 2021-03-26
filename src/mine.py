@@ -27,7 +27,7 @@ def print_help():
         python src/mine.py -h or python mine.py --help
     
     TESTING:
-        python src/test.py
+        python src/test.py < -sax or -manepi >
 
     OPTIONS:
         -h or --help: Displays this message.
@@ -120,4 +120,4 @@ if __name__ == "__main__":
         min_sup_multiplier * len(event_sequence))
 
     print("[!] Discovering frequent episodes in event sequence...")
-    manepi(ticker, event_sequence, min_sup, min_conf)
+    manepi(ticker, event_sequence, min_sup, min_conf, False)

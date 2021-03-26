@@ -6,6 +6,7 @@
 
 # Implementation adapted from https://jmotif.github.io/sax-vsm_site/morea/algorithm/SAX.html
 
+import random
 from string import ascii_uppercase, ascii_lowercase
 from statistics import fmean as mean
 from statistics import stdev, NormalDist

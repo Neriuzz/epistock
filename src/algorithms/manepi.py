@@ -16,7 +16,7 @@ from copy import deepcopy
 FEPT = FrequentEpisodePrefixTree()
 
 
-def manepi(ticker, event_sequence, min_sup, min_conf):
+def manepi(ticker, event_sequence, min_sup, min_conf, testing):
     """
     Performs the MANEPI+ algorithm on a given
     event sequence with a user defined minimum
@@ -52,6 +52,10 @@ def manepi(ticker, event_sequence, min_sup, min_conf):
 
     # End timing
     t2 = time_ns()
+
+    # If we are running tests, just return the number of frequent episodes found
+    if testing:
+        return FEPT.n_frequent_episodes
 
     # Output all frequently occurring episodes and episode rules
     FEPT.output_to_file()
