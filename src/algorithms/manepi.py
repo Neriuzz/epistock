@@ -23,9 +23,9 @@ def manepi(event_sequence, min_sup, min_conf):
     episode_rules.txt respectively. 
 
     args:
-        event_types: The set of the type of events that are possible.
         event_sequence: The event sequence to perform the algorithm on.
         min_sup: The minimum support threshold.
+        min_conf: The minimum confidence threshold.
     """
 
     # Set minimum support and confidence
