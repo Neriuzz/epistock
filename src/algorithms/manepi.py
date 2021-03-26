@@ -121,11 +121,10 @@ def concat_minimal_occurrences(prefix_minimal_occurrences, occurrences):
 
     # Initialise required variables
     concat_minimal_occurrences = []
-    prefix_minimal_occurrences_length = len(prefix_minimal_occurrences)
     i = 0
 
     for occurrence in occurrences:
-        for j in range(i, prefix_minimal_occurrences_length):
+        for j in range(i, prefix_minimal_occurrences_length := len(prefix_minimal_occurrences)):
             # Find first [t's, t'e] s.t. tje < t's and tj+1e > t's
             if prefix_minimal_occurrences[j][1] < occurrence[0] and (j == prefix_minimal_occurrences_length - 1 or (j != prefix_minimal_occurrences_length - 1 and prefix_minimal_occurrences[j + 1][1] >= occurrence[0])):
                 concat_minimal_occurrences.append(
