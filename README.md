@@ -15,6 +15,7 @@ or
 `python src/mine.py --help`
 
 For testing please use
-`python src/test.py`
+- `python src/test.py -sax` for SAX parameter scaling tests
+- `python src/test.py -manepi` for MANEPI+ parameter scaling tests
 
 After `mine.py` has ran, you can find your results in the results directory.
