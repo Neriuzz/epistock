@@ -30,7 +30,7 @@ def event_sequence_size_test():
 
         t1 = time.time_ns()
 
-        manepi("", event_sequence, min_sup, min_conf, True)
+        manepi(event_sequence, min_sup, min_conf)
 
         t2 = time.time_ns()
 
@@ -58,7 +58,7 @@ def event_types_size_test():
 
         t1 = time.time_ns()
 
-        manepi("", event_sequence, min_sup, min_conf, True)
+        manepi(event_sequence, min_sup, min_conf)
 
         t2 = time.time_ns()
 
@@ -87,7 +87,7 @@ def frequent_episodes_size_test():
         t1 = time.time_ns()
 
         n_frequent_episodes = manepi(
-            "", event_sequence, min_sup, min_conf, True)
+            event_sequence, min_sup, min_conf).n_frequent_epsiodes
 
         t2 = time.time_ns()
 

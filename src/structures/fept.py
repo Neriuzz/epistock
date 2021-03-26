@@ -20,16 +20,17 @@ class FrequentEpisodePrefixTree:
         """
         Constructor, sets all the initial required values for the FEPT
         """
+
         self.root = FrequentEpisodePrefixTreeNode("", None, None)
         self.n_frequent_episodes = 0
         self.n_frequent_episode_rules = 0
 
-    def set_ticker(self, ticker):
+    def set_min_sup(self, min_sup):
         """
-        Setter for the ticker attribute
+        Set support threshold
         """
 
-        self.ticker = ticker
+        self.min_sup = min_sup
 
     def set_min_conf(self, min_conf):
         """
@@ -37,6 +38,13 @@ class FrequentEpisodePrefixTree:
         """
 
         self.min_conf = min_conf
+
+    def set_frequent_one_episodes(self, frequent_one_episodes):
+        """
+        Set and store all the frequent 1-episodes
+        """
+
+        self.frequent_one_episodes = frequent_one_episodes
 
     def insert(self, label, minimal_occurrences, support):
         """
@@ -115,7 +123,7 @@ class FrequentEpisodePrefixTree:
         # Else return nothing
         return
 
-    def output_to_file(self):
+    def output_to_file(self, ticker):
         """
         Outputs the frequently occurring episodes and episode
         rules to .txt files
@@ -125,13 +133,13 @@ class FrequentEpisodePrefixTree:
         frequent_episodes, episode_rules = self.get_all_frequent_episodes_and_episode_rules()
 
         # Output frequent epsidodes
-        with open(f"results/{self.ticker}/frequent_episodes.txt", "w") as f:
+        with open(f"results/{ticker}/frequent_episodes.txt", "w") as f:
             print("Episode" + "\t" * 10 + "Support", file=f)
             for episode in frequent_episodes:
                 print(f"{episode.fmt_label:<50}{episode.support}", file=f)
 
         # Output episode rules
-        with open(f"results/{self.ticker}/episode_rules.txt", "w") as f:
+        with open(f"results/{ticker}/episode_rules.txt", "w") as f:
             for rule in episode_rules:
                 print(rule, file=f)
 

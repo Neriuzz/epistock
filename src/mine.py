@@ -25,7 +25,7 @@ def print_help():
     USAGE:
         python src/mine.py <TICKER> <OPTIONS>
         python src/mine.py -h or python mine.py --help
-    
+
     TESTING:
         python src/test.py < -sax or -manepi >
 
@@ -120,4 +120,10 @@ if __name__ == "__main__":
         min_sup_multiplier * len(event_sequence))
 
     print("[!] Discovering frequent episodes in event sequence...")
-    manepi(ticker, event_sequence, min_sup, min_conf, False)
+    FEPT = manepi(event_sequence, min_sup, min_conf)
+
+    # Output tree to .txt files
+    FEPT.output_to_file(ticker)
+
+    # Show user some information
+    print(f"Found {FEPT.n_frequent_episodes} frequently occurring episodes and {FEPT.n_frequent_episode_rules} frequent episode rules.")
