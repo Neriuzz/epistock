@@ -145,8 +145,7 @@ def calculate_support(minimal_occurrences):
     i = 0
     j = 1
     support = 1
-    length = len(minimal_occurrences)
-    while j < length:
+    while j < (length := len(minimal_occurrences)):
         for k in range(j, length):
             if minimal_occurrences[i][1] < minimal_occurrences[k][0]:
                 support += 1
