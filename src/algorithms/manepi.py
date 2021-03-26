@@ -17,10 +17,9 @@ def manepi(event_sequence, min_sup, min_conf):
     """
     Performs the MANEPI+ algorithm on a given
     event sequence with a user defined minimum
-    support threshold and outputs all the
-    frequent episodes and frequent episode rules
-    it finds to frequent_episodes.txt and
-    episode_rules.txt respectively. 
+    support threshold, returning a populated
+    frequent episode prefix tree containing
+    all the frequently ocurring episodes.
 
     args:
         event_sequence: The event sequence to perform the algorithm on.
@@ -43,7 +42,7 @@ def manepi(event_sequence, min_sup, min_conf):
         # Grow the 1-episode
         grow(node)
 
-    # All frequently occurring episodes and frequent episode rules have now been found
+    # All frequently occurring episodes have now been found
     return FEPT
 
 
@@ -89,7 +88,7 @@ def grow(node):
         if not continue_growth:
             continue
 
-        # Grow our pattern and get the minimal occurrences of the new pattern
+        # Get the minimal occurrences of the concatenation of the two episodes
         minimal_occurrences = concat_minimal_occurrences(
             node.minimal_occurrences, occurrences)
 
@@ -100,17 +99,17 @@ def grow(node):
         if len(minimal_occurrences) < FEPT.min_sup:
             continue
 
-        # Check if the pattern is considered frequent (support >= min_sup)
+        # Check if the episode is considered frequent (support >= min_sup)
         support = calculate_support(minimal_occurrences)
         if support >= FEPT.min_sup:
 
             # If it is, create a new FEPT node and add it as a child of the current node
             node = FEPT.insert(label, minimal_occurrences, support)
 
-            # Grow the new pattern further
+            # Perform further episode growth
             grow(node)
 
-    # All frequent patterns have now been found
+    # This node has been grown to its full extent
     return
 
 
