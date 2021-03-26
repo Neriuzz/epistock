@@ -65,7 +65,7 @@ def find_frequent_one_episodes(event_sequence):
     return sorted(list(filter(lambda episode: len(episode[1]) >= FEPT.min_sup, one_episodes.items())))
 
 
-def grow(prefix_node):
+def grow(node):
     """
     Expands a given node, adding onto the tree
     all the frequent episodes with the given
@@ -75,14 +75,14 @@ def grow(prefix_node):
     for event_type, occurrences in FEPT.frequent_one_episodes:
 
         # Concatenate the two episodes
-        label = prefix_node.label + [event_type]
+        label = node.label + [event_type]
 
         #MANEPI+ Optimisations
         continue_growth = True
         for i in range(1, len(label)):
             suffix = label[i:]
 
-            if suffix <= prefix_node.label and not FEPT.exists(suffix):
+            if suffix <= node.label and not FEPT.exists(suffix):
                 continue_growth = False
                 break
 
@@ -91,7 +91,7 @@ def grow(prefix_node):
 
         # Grow our pattern and get the minimal occurrences of the new pattern
         minimal_occurrences = concat_minimal_occurrences(
-            prefix_node.minimal_occurrences, occurrences)
+            node.minimal_occurrences, occurrences)
 
         # If we have less minimal occurrences than the min_sup
         # we will also have less minimal and non-overlapping
@@ -136,7 +136,7 @@ def concat_minimal_occurrences(prefix_minimal_occurrences, occurrences):
     return concat_minimal_occurrences
 
 
-def calculate_support(occurrences):
+def calculate_support(minimal_occurrences):
     """
     Computes the cardinality of the first
     largest set of minimal and non-overlapping
@@ -146,10 +146,10 @@ def calculate_support(occurrences):
     i = 0
     j = 1
     support = 1
-    length = len(occurrences)
+    length = len(minimal_occurrences)
     while j < length:
         for k in range(j, length):
-            if occurrences[i][1] < occurrences[k][0]:
+            if minimal_occurrences[i][1] < minimal_occurrences[k][0]:
                 support += 1
                 i = k
                 j = i + 1
