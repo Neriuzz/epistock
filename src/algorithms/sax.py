@@ -86,12 +86,9 @@ def get_alphabet(alphabet_size):
     Retrieve the alphabet based on the alphabet_size
     """
 
-    alphabet = []
     if alphabet_size > 52:
-        alphabet = [str(i) for i in range(alphabet_size)]
+        return [str(i) for i in range(alphabet_size)]
     elif alphabet_size > 26:
-        alphabet = ascii_uppercase + ascii_lowercase
+        return ascii_uppercase + ascii_lowercase
     else:
-        alphabet = ascii_uppercase
-
-    return alphabet
+        return ascii_uppercase
