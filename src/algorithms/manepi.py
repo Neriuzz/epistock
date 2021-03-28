@@ -122,8 +122,9 @@ def concat_minimal_occurrences(prefix_minimal_occurrences, occurrences):
     concat_minimal_occurrences = []
     i = 0
 
+    prefix_minimal_occurrences_length = len(prefix_minimal_occurrences)
     for occurrence in occurrences:
-        for j in range(i, prefix_minimal_occurrences_length := len(prefix_minimal_occurrences)):
+        for j in range(i, prefix_minimal_occurrences_length):
             if prefix_minimal_occurrences[j][1] < occurrence[0] and (j == prefix_minimal_occurrences_length - 1 or (j != prefix_minimal_occurrences_length - 1 and prefix_minimal_occurrences[j + 1][1] >= occurrence[0])):
                 concat_minimal_occurrences.append(
                     [prefix_minimal_occurrences[j][0], occurrence[0]])
