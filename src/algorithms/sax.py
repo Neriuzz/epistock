@@ -38,8 +38,8 @@ def paa_transform(data, paa_size):
     # Otherwise, perform piecewise aggregate approximation
     paa = [0] * paa_size
     for i in range(length * paa_size):
-        x = i // length + 1
-        y = i // paa_size + 1
+        x = (i // length) + 1
+        y = (i // paa_size) + 1
         paa[x - 1] += data[y - 1]
 
     return [i / length for i in paa]
