@@ -9,6 +9,7 @@ Date: 09/03/2021
 # Import all required data structures
 from structures import FrequentEpisodePrefixTree
 
+
 # Create an empty FETP
 FEPT = FrequentEpisodePrefixTree()
 
@@ -100,14 +101,13 @@ def grow(node):
             continue
 
         # Check if the episode is considered frequent (support >= min_sup)
-        support = calculate_support(minimal_occurrences)
-        if support >= FEPT.min_sup:
+        if (support := calculate_support(minimal_occurrences)) >= FEPT.min_sup:
 
             # If it is, create a new FEPT node and add it as a child of the current node
-            node = FEPT.insert(label, minimal_occurrences, support)
+            new_node = FEPT.insert(label, minimal_occurrences, support)
 
             # Perform further episode growth
-            grow(node)
+            grow(new_node)
 
     # This node has been grown to its full extent
     return
