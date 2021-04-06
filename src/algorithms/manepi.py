@@ -10,8 +10,8 @@ Date: 09/03/2021
 from structures import FrequentEpisodePrefixTree
 
 
-# Create an empty FETP
-FEPT = FrequentEpisodePrefixTree()
+# Create global variable for frequent episode prefix tree
+FEPT = None
 
 
 def manepi(event_sequence, min_sup, min_conf):
@@ -27,6 +27,10 @@ def manepi(event_sequence, min_sup, min_conf):
         min_sup: The minimum support threshold.
         min_conf: The minimum confidence threshold.
     """
+
+    # Create empty FEPT
+    global FEPT
+    FEPT = FrequentEpisodePrefixTree()
 
     # Set minimum support and confidence
     FEPT.set_min_conf(min_conf)
