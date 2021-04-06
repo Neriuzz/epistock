@@ -31,7 +31,7 @@ def print_help():
 
     OPTIONS:
         -h or --help: Displays this message.
-        -w or --word-length: Set the word length parameter for the SAX algorithm. (Default: 0.5 * Length of data)
+        -w or --word-length: Set the word length parameter for the SAX algorithm - Range: (0 1]. (Default: 0.5 * Length of data)
         -a or --alphabet-size: Set the alphabet size parameter for the SAX algorithm. (Default: 5)
         -s or --min-sup: Set the minimum support value for MANEPI. (Default 0.01 * Length of event sequence)
         -c or --min-conf: Set the minimum confidence value for MANEPI. (Default: 0.75)
@@ -73,9 +73,9 @@ if __name__ == "__main__":
 
     if "-w" in args or "--word-length" in args:
         try:
-            word_length = int(args[args.index("-w") + 1])
+            word_length = float(args[args.index("-w") + 1])
         except:
-            word_length = int(args[args.index("--word-length") + 1])
+            word_length = float(args[args.index("--word-length") + 1])
 
     if "-a" in args or "--alphabet-size" in args:
         try:
@@ -108,8 +108,8 @@ if __name__ == "__main__":
     print("[!] Converting csv data into a sequence...")
     time_series = get_time_series(ticker)
 
-    word_length = word_length if word_length else int(word_length_multiplier *
-                                                      len(time_series))
+    word_length = int(word_length * len(time_series)
+                      ) if word_length else int(word_length_multiplier * len(time_series))
 
     print("[!] Generating event sequence...")
     event_sequence = convert_to_event_sequence(
