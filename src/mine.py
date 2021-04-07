@@ -31,8 +31,8 @@ def print_help():
 
     OPTIONS:
         -h or --help: Displays this message.
-        -w or --word-length: Set the word length parameter for the SAX algorithm - Range: (0 1]. (Default: 0.5 * Length of data)
-        -a or --alphabet-size: Set the alphabet size parameter for the SAX algorithm. (Default: 5)
+        -w or --word-length: Set the word length parameter for the SAX algorithm - Range: (0 1]. (Default: 0.8 * Length of data)
+        -a or --alphabet-size: Set the alphabet size parameter for the SAX algorithm. (Default: 26)
         -s or --min-sup: Set the minimum support value for MANEPI. (Default 0.01 * Length of event sequence)
         -c or --min-conf: Set the minimum confidence value for MANEPI. (Default: 0.75)
 
@@ -52,7 +52,7 @@ if __name__ == "__main__":
     alphabet_size = 26
     min_conf = 0.75
     min_sup_multiplier = 0.01
-    word_length_multiplier = 0.75
+    word_length_multiplier = 0.8
 
     word_length = 0
     min_sup = 0
