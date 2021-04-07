@@ -126,4 +126,4 @@ if __name__ == "__main__":
     FEPT.output_to_file(ticker)
 
     # Show user some information
-    print(f"Found {FEPT.n_frequent_episodes} frequently occurring episodes and {FEPT.n_frequent_episode_rules} frequent episode rules.")
+    print(f"Found {FEPT.n_frequent_episodes} frequently occurring episodes and {FEPT.n_frequent_episode_rules} frequent episode rules with min_sup = {FEPT.min_sup} and min_conf = {FEPT.min_conf}")
